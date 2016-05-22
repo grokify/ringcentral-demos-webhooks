@@ -10,8 +10,8 @@ This is a quick 3-legged OAuth demo that runs using JavaScript, Node.js and Expr
 ### Via NPM
 
 ```bash
-$ git clone https://github.com/grokify/ringcentral-demos-oauth
-$ cd ringcentral-demos-oauth/javascript-express
+$ git clone https://github.com/grokify/ringcentral-demos-webhooks
+$ cd ringcentral-demos-webhooks/javascript-express
 $ npm install
 ```
 
@@ -38,6 +38,10 @@ Note: If you set the following parameters, you can start this demo using TLS. Be
 | `MY_APP_TLS_ENABLED` | Set to `1` for HTTPS and `0` for HTTP |
 | `MY_APP_TLS_PRIVATE_KEY` | Set to path to PEM file for private key |
 | `MY_APP_TLS_CERTIFICATE` | Set to path to PEM file for certificate |
+
+### Development
+
+For development purposes, you can set up a webhook to a local host using [ngrok](https://ngrok.com/). Of note, it's possible to run a HTTP server on localhost without TLS while exposting a TLS-enabled ngrok public hostname.
 
 ## Usage
 
