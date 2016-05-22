@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script>
+
+var config = {
+    authUri: '{{{ authorize_uri }}}',
+    redirectUri: '{{{ redirect_uri }}}',
+}
+
+var OAuthCode = function(config) {
+    this.config = config;
+    this.loginPopup  = function() {
+        this.loginPopupUri(this.config['authUri'], this.config['redirectUri']);
+    }
+    this.loginPopupUri  = function(authUri, redirectUri) {
+        var win         = window.open(authUri, 'windowname1', 'width=800, height=600'); 
+
+        var pollOAuth   = window.setInterval(function() { 
+            try {
+                console.log(win.document.URL);
+                if (win.document.URL.indexOf(redirectUri) != -1) {
+                    window.clearInterval(pollOAuth);
+                    win.close();
+                    location.reload();
+                }
+            } catch(e) {
+                console.log(e)
+            }
+        }, 100);
+    }
+}
+
+var WebhooksDemo = function() {
+    this.loadHooks = function() {
+        alert("LOAD_HOOKS");
+        $.get( '/hooks', function( data ) {
+            var data = JSON.parse(data);
+            var json = JSON.stringify(data, null, '  ');
+            $( '#subscriptionsList' ).html( json );
+            $( '#subscriptions' ).html( json );
+        });
+    }
+    this.createHook = function(requestBodyJson='') {
+        requestBodyJson = requestBodyJson.replace(/&amp;/g, '&');
+        $.post( '/create_hook', {requestBodyJson: requestBodyJson}, function( data ) {
+            hooks.loadHooks();
+            alert('Webhook Created');
+        });
+    }
+    this.renewHook = function(subscriptionId='') {
+        if(! subscriptionId.match(/^[0-9a-f-]+$/)) {
+            alert('Enter a Subscription Id');
+            return;
+        }
+        $.post( '/renew_hook', {subscriptionId: subscriptionId}, function( data ) {
+            hooks.loadHooks();
+            alert('Webhook Renewed');
+        });
+    }
+    this.deleteHook = function(subscriptionId='') {
+        if(! subscriptionId.match(/^[0-9a-f-]+$/)) {
+            alert('Enter a Subscription Id');
+            return;
+        }
+        $.post( '/delete_hook', {subscriptionId: subscriptionId}, function( data ) {
+            hooks.loadHooks();
+            alert('Webhook Deleted');
+        });
+    }
+}
+
+var oauth = new OAuthCode(config);
+var hooks = new WebhooksDemo();
+
+$(function() {
+  console.log( "ready!" );
+  hooks.loadHooks();
+});
+
+        </script>
+        <style>
+pre {background-color:#efefef;padding:1em;overflow-x:scroll}
+span.fixed {font-family:Courier; background-color:#efefef;}
+.webhookId {width:30em;}
+        </style>
+    </head>
+    <body>
+        <h1>RingCentral Webhooks Demo in JavaScript with Express</h1>
+
+            <ul>
+                <li>Project Repo: <a href="https://github.com/grokify/ringcentral-demos-webhooks">https://github.com/grokify/ringcentral-demos-webhooks</a></li>
+                <li>Report Issues: <a href="https://github.com/grokify/ringcentral-demos-webhooks/issues">https://github.com/grokify/ringcentral-demos-webhooks/issues</a></li>
+            </ul>
+
+        <hr />
+        <h2>Access Token</h2>
+
+            <p>If there is no access token or the access token is invalid, click the Login button below.</p>
+
+            <pre>{{ token_json }}</pre>
+
+            <input type="button" value="Login with RingCentral" onclick="oauth.loginPopup()" />
+
+        <hr />
+        <h2>Read Webhooks</h2>
+
+            <p>Existing webhooks can be retreived from the <span class="fixed">/restapi/v1.0/subscription</span> endpoint. Filter the resulting records on <span class="fixed">deliveryMode.transportType</span> is set to <span class="fixed">WebHook</span>.</p>
+
+            <pre id="subscriptions"></pre>
+
+            <input type="button" value="Load Webhooks View" onclick="hooks.loadHooks();" />
+
+            <input type="button" value="Clear Webhooks View" onclick="$('#subscriptions').html('');$('#subscriptionsList').html('')" />
+
+        <hr />
+        <h2>Create Webhook</h2>
+
+            <p>To create a webhook edit the <span class="fixed">eventFilters</span> property if desired, and then click the Create Webhook button below.</p>
+
+            <textarea id="eventFiltersJson" style="font-family:courier;width:100%;height:17em;background-color:#ffffdd">
+{
+  "eventFilters": [
+    "/restapi/v1.0/account/~/extension/~/presence?detailedTelephonyState=true&sipData=true",
+    "/restapi/v1.0/account/~/extension/~/message-store",
+    "/restapi/v1.0/account/~/extension/~/presence/line",
+    "/restapi/v1.0/account/~/extension",
+    "/restapi/v1.0/subscription/~?threshold=86400&interval=3600"
+  ],
+  "deliveryMode": {
+    "transportType": "WebHook",
+    "address": "{{{ webhook_uri }}}"
+  }
+}
+            </textarea>
+
+            <input type="button" value="Create Webhook" onclick="hooks.createHook($('#eventFiltersJson').html());" />
+
+        <hr />
+        <h2>Renew Webhook</h2>
+
+            <input type="text" id="renewSubscriptionId" placeholder="subscriptionId" class="webhookId" />
+
+            <input type="button" value="Renew Webhook" onclick="hooks.renewHook($('#renewSubscriptionId').val())" />
+
+        <hr />
+        <h2>Delete Webhook</h2>
+
+            <input type="text" id="deleteSubscriptionId" placeholder="subscriptionId" class="webhookId" /> <input type="button" value="Delete Webhook" onclick="hooks.deleteHook($('#deleteSubscriptionId').val())" />
+
+        <hr />
+
+        <p>More info:</p>
+        <ul>
+            <li><a href="https://developer.ringcentral.com/api-docs/latest/index.html">RingCentral API Developer Guide</a></li>
+            <li><a href="https://github.com/grokify/ringcentral-oauth-demos">GitHub repo</a>
+        </ul>
+    </body>
+</html>

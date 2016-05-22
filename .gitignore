@@ -1,0 +1,17 @@
+*.env
+*.pem
+php/composer.lock
+php/composer.phar
+php/vendor
+javascript/public/components
+javascript/public/config.js
+javascript-express/.env
+javascript-express/node_modules
+javascript-express/npm-debug.log
+python-bottle/.env
+ruby-sinatra/.env
+ruby-sinatra/Gemfile.lock
+csharp-nancy/csharp-nancy/bin/
+csharp-nancy/csharp-nancy/obj/
+csharp-nancy/packages/
+csharp-nancy/.vs/
