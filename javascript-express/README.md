@@ -1,9 +1,9 @@
-RingCentral 3-Legged OAuth Demo in JavaScript with Express
-==========================================================
+RingCentral Webhooks Demo in JavaScript with Express
+====================================================
 
 ## Overview
 
-This is a quick 3-legged OAuth demo that runs using JavaScript, Node.js and Express with the [RingCentral JavaScript SDK](https://github.com/ringcentral/ringcentral-js) v2.x
+This is a quick webhooks demo that runs using JavaScript, Node.js and Express with the [RingCentral JavaScript SDK](https://github.com/ringcentral/ringcentral-js) v2.x
 
 ## Installation
 
@@ -20,7 +20,7 @@ $ npm install
 Edit the `.env` file to add your application key and application secret.
 
 ```bash
-$ cd ringcentral-demos-oauth/javascript-express
+$ cd ringcentral-demos-webhooks/javascript-express
 $ cp config-sample.env.txt .env
 $ vi .env
 ```
