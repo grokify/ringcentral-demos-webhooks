@@ -157,7 +157,12 @@ app.post('/renew_hook', urlencodedParser, function(req, res) {
   var subscriptionId = req.body.subscriptionId || '';
   if (subscriptionId.match(/^[0-9a-f-]+$/)) {
     rcsdk.platform()
-      .put('/subscription/' + subscriptionId)
+      .send({
+        method: 'PUT',
+        url: '/subscription/' + subscriptionId,
+        headers: {'Content-Type': 'application/json'},
+        body: '{}'
+      })
       .then(function(response) {
         console.log('RENEW THEN');
         res.send('RENEW THEN: ' + subscriptionId);
