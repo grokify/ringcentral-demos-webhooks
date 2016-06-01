@@ -35,7 +35,6 @@ var OAuthCode = function(config) {
 
 var WebhooksDemo = function() {
     this.loadHooks = function() {
-        alert("LOAD_HOOKS");
         $.get( '/hooks', function( data ) {
             var data = JSON.parse(data);
             var json = JSON.stringify(data, null, '  ');

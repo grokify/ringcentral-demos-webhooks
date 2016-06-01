@@ -1,5 +1,6 @@
 *.env
 *.pem
+npm-debug.log
 php/composer.lock
 php/composer.phar
 php/vendor

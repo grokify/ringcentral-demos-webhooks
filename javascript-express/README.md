@@ -17,6 +17,8 @@ $ npm install
 
 ## Configuration
 
+When configuring this demo app, you will need an Internet accessible host on which to host your webhook since the RingCentral service will need to be able to reach it. You can use a server if you have one or, for development purposes on localhost, you can use a service like [ngrok](https://ngrok.com/) which will redirect both https and http to your localhost sytem.
+
 Edit the `.env` file to add your application key and application secret.
 
 ```bash
@@ -31,17 +33,13 @@ In the [Developer Portal](http://developer.ringcentral.com/), ensure the redirec
 http://localhost:8080/callback
 ```
 
-Note: If you set the following parameters, you can start this demo using TLS. Be sure you are using HTTPS for your redirect URI.
+Note: If you set the following parameters, you can start this demo using TLS. Be sure you are using HTTPS for your redirect URI. If you are using ngrok with your localhost, ngrok will provide a https tunnel to your http service so there's no need to set up your own https capability during development.
 
 | Property | Information |
 |----------|-------------|
 | `MY_APP_TLS_ENABLED` | Set to `1` for HTTPS and `0` for HTTP |
 | `MY_APP_TLS_PRIVATE_KEY` | Set to path to PEM file for private key |
 | `MY_APP_TLS_CERTIFICATE` | Set to path to PEM file for certificate |
-
-### Development
-
-For development purposes, you can set up a webhook to a local host using [ngrok](https://ngrok.com/). Of note, it's possible to run a HTTP server on localhost without TLS while exposting a TLS-enabled ngrok public hostname.
 
 ## Usage
 

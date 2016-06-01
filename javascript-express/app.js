@@ -12,7 +12,7 @@ app.set('view engine', 'handlebars');
 
 // Create body parsers for application/json and application/x-www-form-urlencoded
 var bodyParser = require('body-parser')
-var jsonParser = bodyParser.json()
+app.use(bodyParser.json())
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 var ringcentral = require('ringcentral');
@@ -73,7 +73,7 @@ app.get('/callback', function(req, res) {
         res.send('');
       })
       .catch(function(e) {
-        console.log('ERR ' + e.message  || 'Server cannot authorize user');
+        console.log('ERR_CALLBACK ' + e.message  || 'Server cannot authorize user');
         res.send('');
       });
   }
@@ -103,10 +103,16 @@ app.get('/hooks', function(req, res) {
 });
 
 app.post('/hook', function(req, res) {
+  console.log('/hook called');
   var header = 'Validation-Token';
   console.log('Validation-Token: ' + req.get('Validation-Token'));
   if (req.get(header)) {
     res.set(header, req.get(header));
+    res.send('');
+  }
+  console.log(req.get('Content-Type'));
+  if (req.get('Content-Type').match(/application\/json/)) {
+    console.log(JSON.stringify(req.body, null, 2));
   }
   rcsdk.platform().loggedIn()
     .then(function(status) {
@@ -153,16 +159,16 @@ app.post('/renew_hook', urlencodedParser, function(req, res) {
     rcsdk.platform()
       .put('/subscription/' + subscriptionId)
       .then(function(response) {
-        console.log('RENEW 200');
-        res.send('RENEW 200: ' + subscriptionId);
+        console.log('RENEW THEN');
+        res.send('RENEW THEN: ' + subscriptionId);
       })
       .catch(function(e) {
-        console.log('RENEW 500');
+        console.log('RENEW CATCH');
         console.log(e);
-        res.send('RENEW 500: ' + e);
+        res.send('RENEW CATCH: ' + e);
       }) 
   } else {
-    console.log('RENEW 400');
+    console.log('RENEW ELSE');
     res.sendStatus(400);
   }
 });
@@ -173,16 +179,16 @@ app.post('/delete_hook', urlencodedParser, function(req, res) {
     rcsdk.platform()
       .delete('/subscription/' + subscriptionId)
       .then(function(response) {
-        console.log('DELETE 200');
-        res.send('DELETE 200: ' + subscriptionId);
+        console.log('DELETE THEN');
+        res.send('DELETE THEN: ' + subscriptionId);
       })
       .catch(function(e) {
-        console.log('DELETE 500');
+        console.log('DELETE CATCH');
         console.log(e);
-        res.send('DELETE 500: ' + e);
+        res.send('DELETE CATCH: ' + e);
       }) 
   } else {
-    console.log('DELETE 400');
+    console.log('DELETE ELSE');
     res.sendStatus(400);
   }
 });
