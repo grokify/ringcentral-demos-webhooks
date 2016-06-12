@@ -8,6 +8,11 @@ Demos are provided for:
 * [Demo JavaScript with Express](https://github.com/grokify/ringcentral-demos-webhooks/tree/master/javascript-express)
 * [Tutorial](http://ringcentral-quickstart.readthedocs.io/en/latest/webhooks/)
 
+## Links
+
+* [Developer Guide](https://developers.ringcentral.com/api-docs/latest/index.html#!#RefNotifications.html)
+* [FAQ](http://ringcentral-faq.readthedocs.io/en/latest/notifications_subscriptions/)
+
 ## Contributing
 
 1. Fork it (http://github.com/grokify/ringcentral-demos-webhooks/fork)
