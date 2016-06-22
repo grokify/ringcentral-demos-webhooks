@@ -5,7 +5,7 @@ This project provides demos using webhooks.
 
 Demos are provided for:
 
-* [Demo JavaScript with Express](https://github.com/grokify/ringcentral-demos-webhooks/tree/master/javascript-express)
+* [JavaScript with Express](https://github.com/grokify/ringcentral-demos-webhooks/tree/master/javascript-express)
 * [Tutorial](http://ringcentral-quickstart.readthedocs.io/en/latest/webhooks/)
 
 ## Links
