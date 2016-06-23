@@ -49,12 +49,13 @@
                     alert('Webhook Created');
                 });
             }
-            this.createHookAllExtensions =function(requestBodyJson='') {
+            this.retrieveAllExtensions =function(requestBodyJson='') {
                 requestBodyJson = requestBodyJson.replace(/&amp;/g, '&');
                 $.post( '/retreive_all_extensions', function( data ) {
                     hooks.loadHooks();
                     alert('Retreieving Extensions Completed');
                 });
+                location.reload();
             }
             this.renewHook = function(subscriptionId='') {
                 if(! subscriptionId.match(/^[0-9a-f-]+$/)) {
@@ -128,9 +129,9 @@
 
             <textarea id="eventFiltersJson" style="font-family:courier;width:100%;height:17em;background-color:#ffffdd">
 {
-  "eventFilters": "{{#each extensions}}
-                {{.}}
-            {{/each}}",
+  "eventFilters": [{{#each extensions}}
+                "{{this}}"{{#unless @last}},{{/unless}}
+            {{/each}}],
   "deliveryMode": {
     "transportType": "WebHook",
     "address": "{{ webhook_uri }}"
@@ -139,7 +140,7 @@
             </textarea>
 
 <input type="button" value="Create Webhook" onclick="hooks.createHook($('#eventFiltersJson').html());" />
-<input type="button" value="Create Webhook on all extensions" onclick="hooks.createHookAllExtensions($('#eventFiltersJson').html());" />
+<input type="button" value="Retrieve all extensions" onclick="hooks.retrieveAllExtensions($('#eventFiltersJson').html());" />
 
 <hr />
 <h2>Renew Webhook</h2>

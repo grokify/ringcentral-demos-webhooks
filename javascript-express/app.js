@@ -11,6 +11,8 @@ var hbs = exphbs.create({});
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+
+
 // Create body parsers for application/json and application/x-www-form-urlencoded
 var bodyParser = require('body-parser')
 app.use(bodyParser.json())
@@ -155,29 +157,6 @@ app.post('/create_hook', urlencodedParser, function(req, res) {
       })
 });
 
-
-// Create WebHooks on all extensions
-app.post('/create_hook_all_extensions' , urlencodedParser, function(req, res) {
-
-  var extension_list = app.post( '/retreive_all_extensions', function( data ) {
-    alert('Extensions Retrieved');
-  });
-  //var requestBodyJson = req.body.requestBodyJson;
-  //var requestBodyData = JSON.parse(requestBodyJson);
-  //rcsdk.platform()
-  //    .post('/subscription', requestBodyData)
-  //    .then(function (response) {
-  //      console.log('Subscribed');
-  //      console.log(response.text());
-  //      res.send('SUB_SUCCESS ' + response.text());
-  //    })
-  //    .catch(function (e) {
-  //      console.log('Subscription Error');
-  //      console.log(e);
-  //      res.send(e);
-  //    })
-});
-
 app.post('/renew_hook', urlencodedParser, function(req, res) {
   var subscriptionId = req.body.subscriptionId || '';
   if (subscriptionId.match(/^[0-9a-f-]+$/)) {
@@ -250,13 +229,9 @@ app.post('/retreive_all_extensions', function(req, res) {
                   extensions.push(['/restapi/v1.0/account/account/~/extension/' + extension_number ]);
                 }
 
-                //console.log(extensions);
               }
               extensions.push(['/restapi/v1.0/subscription/~?threshold=86400&interval=3600']);
-              //res.send({
-              //  webhook_uri: process.env.MY_APP_WEBHOOK_URL,
-              //  extensions: extensions
-              //});
+
             })
             .catch(function(e) {
               console.log('ERR ' + e.message  || 'Server cannot authorize user');
