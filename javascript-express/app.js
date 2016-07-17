@@ -208,27 +208,27 @@ app.post('/retreive_all_extensions', function(req, res) {
   rcsdk.platform().loggedIn()
       .then(function(status) {
         rcsdk.platform()
-            .send({
-              method: 'GET',
-              url: '/account/~/extension'
+            .get('/account/~/extension',{
+                page:1,
+                perPage:20
             })
             .then(function(response) {
               console.log('retreiving extension list');
               var text = response.text();
               res.send(text);
               var apiresponse = response.json();
-
-              for (var key in apiresponse.records) {
-
-                var extension_number = "";
-                if (apiresponse.records[key].hasOwnProperty('extensionNumber') && apiresponse.records[key].type == "User") {
-                  extension_number = parseInt(apiresponse.records[key].id);
-                  extensions.push(['/restapi/v1.0/account/account/~/extension/' + extension_number + '/presence?detailedTelephonyState=true&sipData=true']);
-                  extensions.push(['/restapi/v1.0/account/account/~/extension/' + extension_number + '/message-store']);
-                  extensions.push(['/restapi/v1.0/account/account/~/extension/' + extension_number + '/presence/line']);
-                  extensions.push(['/restapi/v1.0/account/account/~/extension/' + extension_number ]);
-                }
-
+              createEventFilter(response);
+              while (apiresponse.navigation.nextPage) {
+                return rcsdk.platform()
+                    .get(apiresponse.navigation.nextPage.uri)
+                    .then(function(response) {
+                        console.log('retreiving next page of extensions');
+                    })
+                    .then(createEventFilter(response))
+                    .catch(function(e) {
+                        console.log('ERR ' + e.message  || 'Server cannot authorize user');
+                        res.send('ERROR');
+                    });
               }
               extensions.push(['/restapi/v1.0/subscription/~?threshold=86400&interval=3600']);
 
@@ -242,3 +242,20 @@ app.post('/retreive_all_extensions', function(req, res) {
         res.send("E_NOT_LOGGED_IN");
       });
 });
+
+function createEventFilter (res){
+    var apiresponse = res.json();
+    for (var key in apiresponse.records) {
+
+        var extension_number = "";
+        if (apiresponse.records[key].hasOwnProperty('extensionNumber') && apiresponse.records[key].type == "User") {
+            extension_number = parseInt(apiresponse.records[key].id);
+            extensions.push(['/restapi/v1.0/account/account/~/extension/' + extension_number + '/presence?detailedTelephonyState=true&sipData=true']);
+            extensions.push(['/restapi/v1.0/account/account/~/extension/' + extension_number + '/message-store']);
+            extensions.push(['/restapi/v1.0/account/account/~/extension/' + extension_number + '/presence/line']);
+            extensions.push(['/restapi/v1.0/account/account/~/extension/' + extension_number]);
+        }
+
+    }
+    return;
+}
