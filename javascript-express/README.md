@@ -65,3 +65,6 @@ https://755c8b38.ngrok.io/
 ````
 
 Then click the <input type="button" value="Login with RingCentral"> button to authorize the demo app and view the access token.
+
+Events are logged to the Node.js console.
+
