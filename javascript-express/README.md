@@ -62,7 +62,7 @@ $ npm start
 ### Start ngrok (optional)
 
 ```bash
-ngrok http 8080
+$ ngrok http 8080
 ```
 
 Go to the URL (you must start ngrok if using it):
