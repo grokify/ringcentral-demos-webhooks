@@ -144,7 +144,7 @@ app.post('/create_hook', urlencodedParser, function(req, res) {
     .then(function(response) {
       console.log('Subscribed');
       console.log(response.text());
-      res.send('SUB_SUCCESS ' + response.text());
+      res.send(response.text());
     })
     .catch(function(e) {
       console.log('Subscription Error');

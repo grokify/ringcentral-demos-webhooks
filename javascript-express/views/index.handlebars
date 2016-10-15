@@ -46,7 +46,25 @@ var WebhooksDemo = function() {
         requestBodyJson = requestBodyJson.replace(/&amp;/g, '&');
         $.post( '/create_hook', {requestBodyJson: requestBodyJson}, function( data ) {
             hooks.loadHooks();
-            alert('Webhook Created');
+            if (typeof data == 'string') {
+                hash = JSON.parse(data);
+                if (hash.status == 'Active') {
+                    alert('Webhook Created');
+                } else {
+                    alert(data);
+                }
+            } else {
+                if (data.apiResponse._response.status > 399) {
+                    message = data.apiResponse._response.status
+                        .toString()
+                        .concat(' ')
+                        .concat(data.apiResponse._response.statusText);
+                    message = message.concat(' ').concat(data.apiResponse._json.message);
+                    alert(message);
+                } else {
+                    alert(JSON.stringify(data));
+                }
+            }
         });
     }
     this.renewHook = function(subscriptionId='') {
@@ -124,6 +142,7 @@ span.fixed {font-family:Courier; background-color:#efefef;}
   "eventFilters": [
     "/restapi/v1.0/account/~/extension/~/presence?detailedTelephonyState=true&sipData=true",
     "/restapi/v1.0/account/~/extension/~/message-store",
+    "/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS",
     "/restapi/v1.0/account/~/extension/~/presence/line",
     "/restapi/v1.0/account/~/extension",
     "/restapi/v1.0/subscription/~?threshold=86400&interval=3600"
