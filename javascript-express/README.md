@@ -52,10 +52,17 @@ The example server can also run using TLS / SSL if you have a certificate. If yo
 
 ## Usage
 
-Open the web page:
+### Start Node.js
+
 
 ```bash
 $ npm start
+```
+
+### Start ngrok (optional)
+
+```bash
+ngrok http 8080
 ```
 
 Go to the URL (you must start ngrok if using it):
