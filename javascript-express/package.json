@@ -1,14 +1,14 @@
 {
-  "name": "ringcentral-demos-oauth",
+  "name": "ringcentral-demos-webhooks",
   "version": "0.0.1",
-  "description": "RingCentral Node.js OAuth 2.0 demo",
+  "description": "RingCentral Node.js Webhooks 2.0 demo",
   "scripts": {
     "start": "node app",
     "test": "./node_modules/mocha/bin/mocha test/**/*-test.js --reporter spec"
   },
   "author": "johncwang@gmail.com",
   "license": "MIT",
-  "homepage": "https://github.com/grokify/ringcentral-demos-oauth/",
+  "homepage": "https://github.com/grokify/ringcentral-demos-webhooks/",
   "dependencies": {
     "body-parser": "latest",
     "dotenv": "latest",
