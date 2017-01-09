@@ -1,7 +1,7 @@
-RingCentral Demos for Webhooks
-==============================
+RingCentral and Glip Demos for Webhooks
+=======================================
 
-This project provides demos using webhooks.
+This project provides demos using webhooks using both [RingCentral](https://developers.ringcentral.co) and [Glip](https://glip.com).
 
 Demos are provided for:
 
