@@ -1,0 +1,2 @@
+- **0.0.2** - 2017-01-09
+  - Add Glip API Examples

@@ -6,12 +6,11 @@ This project provides demos using webhooks using both [RingCentral](https://deve
 Demos are provided for:
 
 * [JavaScript with Express](https://github.com/grokify/ringcentral-demos-webhooks/tree/master/javascript-express)
-* [Tutorial](http://ringcentral-quickstart.readthedocs.io/en/latest/webhooks/)
 
-## Links
+For general information on RingCentral webhooks support, please see:
 
-* [Developer Guide](https://developers.ringcentral.com/api-docs/latest/index.html#!#RefNotifications.html)
-* [FAQ](http://ringcentral-faq.readthedocs.io/en/latest/notifications_subscriptions/)
+* [Developer Guide](http://ringcentral-api-docs.readthedocs.io/en/latest/webhooks/)
+* [Developer FAQ](http://ringcentral-faq.readthedocs.io/en/latest/notifications_subscriptions/)
 
 ## Contributing
 
