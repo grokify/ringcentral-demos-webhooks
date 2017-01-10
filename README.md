@@ -10,7 +10,7 @@ Demos are provided for:
 For general information on RingCentral webhooks support, please see:
 
 * [Developer Guide](http://ringcentral-api-docs.readthedocs.io/en/latest/webhooks/)
-* [Developer FAQ](http://ringcentral-faq.readthedocs.io/en/latest/notifications_subscriptions/)
+* [Developer FAQ](http://ringcentral-faq.readthedocs.io/en/latest/webhooks/)
 
 ## Contributing
 
